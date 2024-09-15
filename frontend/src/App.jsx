@@ -7,7 +7,8 @@ function App() {
   return(
   <div>
     <h1 className="underline">Hello worlds</h1>
-  </div>)
+  </div>
+  )
 }
 
 export default App;
