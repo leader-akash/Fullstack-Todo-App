@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const cors = require("cors")
 const http = require("http");
 const { connectToMongoDb } = require("./db/ConnectMongoDB");
 const cookieParser = require("cookie-parser");
@@ -10,6 +11,11 @@ const todoRoutes  = require("./routes/todo.routes")
 dotenv.config();
 
 const app = express();
+
+app.use(cors({
+    origin: "*"
+}))
+
 const port = process.env.PORT || 4000;
 
 app.use(express.json()); // to parse incoming request in json payloads
