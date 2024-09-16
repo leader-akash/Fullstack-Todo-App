@@ -26,6 +26,8 @@ const Signup = () => {
 
     try {
       const res = await axios.post(`http://localhost:4000/api/auth/signup`, data);
+      localStorage.setItem('jwtToken', res.data.token);
+
       toast.success(res?.data?.message);
       navigate('/');
     } catch (err) {
@@ -63,7 +65,7 @@ const Signup = () => {
           />
           <InputField
             label="Confirm Password"
-            type="password"
+            type="text"
             placeholder="Enter confirm password"
             value={data.confirmPassword}
             onChange={(e) => setData({ ...data, confirmPassword: e.target.value })}
