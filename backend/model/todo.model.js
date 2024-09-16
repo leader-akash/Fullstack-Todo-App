@@ -9,7 +9,7 @@ const todo = new mongoose.Schema({
         type: String,
         required: true,
     },
-    date:{
+    date: {
         type: Date,
         required: true,
     },
@@ -17,15 +17,19 @@ const todo = new mongoose.Schema({
         type: String,
         required: true,
     },
-    completed:{
+    completed: {
         type: Boolean,
         default: false,
+    },
+    user: { // user reference
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     }
-},
-{
+}, {
     timestamps: true
 });
 
 const Todo = mongoose.model("Todo", todo);
 
-module.exports = Todo
+module.exports = Todo;

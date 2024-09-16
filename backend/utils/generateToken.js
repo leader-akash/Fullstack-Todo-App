@@ -10,6 +10,8 @@ const generateTokenAndSetCookie = async(userId, res) => {
         sameSite: "strict", // CSRF attacks cross-site request forgery attacks
        
     })
+
+    return token;
 }
 
 module.exports = {generateTokenAndSetCookie}

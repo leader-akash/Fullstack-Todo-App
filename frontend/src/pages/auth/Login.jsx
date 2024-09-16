@@ -17,6 +17,8 @@ const Login = () => {
 
         try {
             const res = await axios.post(`http://localhost:4000/api/auth/login`, data);
+            localStorage.setItem('jwtToken', res.data.token);
+            console.log('res', res)
             toast.success(res?.data?.message);
             navigate('/');
         } catch (err) {
