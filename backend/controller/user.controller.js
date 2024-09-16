@@ -41,7 +41,7 @@ const signup = async(req, res) => {
                 _id: newUser.id,
                 name: newUser.name,
                 username: newUser.username,
-                message: "User created successfully"
+                message: "User created successfully 🎉"
             })
         }
         else {
@@ -74,7 +74,8 @@ const login = async(req,res) => {
         res.status(200).json({
             _id: user._id,
             name:  user.name,
-            username: user.username
+            username: user.username,
+            message: `${user.username} Logged in Successfully🎉 `
         })
 
     }

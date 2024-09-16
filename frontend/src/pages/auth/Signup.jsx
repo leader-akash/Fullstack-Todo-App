@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const Signup = () => {
 
+    const navigate = useNavigate();
     const [data, setData] = useState({
         name: "",
         username: "",
@@ -18,7 +19,7 @@ const Signup = () => {
         try{
             const res = await axios.post(`http://localhost:4000/api/auth/signup`, data)
             toast.success(res?.data?.message)
-            console.log('res', res?.data);
+            navigate("/");
         }
         catch(err){
             console.log('err', err)
