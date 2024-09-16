@@ -13,11 +13,16 @@ const GetAllTasks = () => {
 
   const fetchData = async () => {
     try {
+      const token = localStorage.getItem('jwtToken');
+
       setIsLoading(true);
-      const res = await axios.get('http://localhost:4000/getAllTasks');
+      const res = await axios.get('http://localhost:4000/getAllTasks',{
+        headers: { Authorization: `Bearer ${token}` }
+      });
       setData(res?.data?.allTasks || []);
     } catch (err) {
-      toast.error(err?.response?.data?.error || 'An error occurred');
+      // toast.error(err?.response?.data?.error || 'An error occurred');
+      console.log('error', err)
     } finally {
       setIsLoading(false);
     }
@@ -47,7 +52,10 @@ const GetAllTasks = () => {
     <div className="w-full p-4">
       <h2 className="text-2xl font-bold mb-4 text-center text-gray-800 dark:text-white">All Tasks</h2>
       <div className="flex justify-center items-center min-h-screen">
-        {isLoading ? (
+        { 
+        !data ?
+        <p className='text-2xl text-white'>No data found</p>
+       : isLoading ? (
           <RingLoader color="#3498db" size={60} />
         ) : (
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -63,6 +71,8 @@ const GetAllTasks = () => {
           </div>
         )}
       </div>
+
+      
 
       {/* Modal for editing task */}
       {modalOpen && (

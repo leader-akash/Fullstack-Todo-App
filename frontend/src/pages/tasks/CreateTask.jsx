@@ -32,8 +32,21 @@ const CreateTask = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem('jwtToken');
+    if (!token) {
+      toast.error('Unauthorized: No token found');
+      return;
+    }
+
     try {
-      const res = await axios.post(`http://localhost:4000/addTask`, task);
+      const res = await axios.post('http://localhost:4000/addTask', task, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        withCredentials: true // This ensures cookies are sent with the request
+    });
+    console.log('res', res)
+    
       toast.success(res?.data?.message);
       setTask({
         title: "",

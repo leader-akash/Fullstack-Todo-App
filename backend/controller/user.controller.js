@@ -33,15 +33,15 @@ const signup = async(req, res) => {
         })
 
         if(newUser){
-            generateTokenAndSetCookie(newUser._id, res)
-
+            const token= await generateTokenAndSetCookie(newUser._id, res)
             await newUser.save();
 
             res.status(201).json({
                 _id: newUser.id,
                 name: newUser.name,
                 username: newUser.username,
-                message: "User created successfully 🎉"
+                message: "User created successfully 🎉",
+                token: token
             })
         }
         else {
@@ -69,13 +69,14 @@ const login = async(req,res) => {
             return res.status(400).json({error: "Invalid username or password"});
         }
 
-        generateTokenAndSetCookie(user._id, res);
+       const token = await generateTokenAndSetCookie(user._id, res);
 
-        res.status(200).json({
+       res.status(200).json({
             _id: user._id,
             name:  user.name,
             username: user.username,
-            message: `${user.username} Logged in Successfully🎉 `
+            message: `${user.username} Logged in Successfully🎉 `,
+            token: token,
         })
 
     }
