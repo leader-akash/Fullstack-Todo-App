@@ -8,6 +8,10 @@ const signup = async(req, res) => {
 
         console.log('data', name, username, password, confirmPassword)
 
+        if(password.length < 6){
+            return res.status(400).json({error: "Password must have atleast 6 characters"});
+        }
+
         if(password !== confirmPassword) {
             return res.status(400).json({error: "Password doesn't match"});
         }
@@ -36,7 +40,8 @@ const signup = async(req, res) => {
             res.status(201).json({
                 _id: newUser.id,
                 name: newUser.name,
-                username: newUser.username
+                username: newUser.username,
+                message: "User created successfully 🎉"
             })
         }
         else {
@@ -69,7 +74,8 @@ const login = async(req,res) => {
         res.status(200).json({
             _id: user._id,
             name:  user.name,
-            username: user.username
+            username: user.username,
+            message: `${user.username} Logged in Successfully🎉 `
         })
 
     }

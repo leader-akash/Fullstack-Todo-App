@@ -27,7 +27,8 @@ const addTask = async(req,res) => {
             description : newTask.description,
             date: newTask.date,
             timePeriod: newTask.timePeriod,
-            completed: newTask.completed
+            completed: newTask.completed,
+            message: "Task created successfully 🎉"
             })
         }
         else {
