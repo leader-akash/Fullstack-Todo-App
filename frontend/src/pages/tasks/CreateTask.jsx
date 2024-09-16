@@ -2,6 +2,9 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { InputField } from '../../components/input/InputField';
+import { SelectField } from '../../components/input/SelectField';
+import { TextAreaField } from '../../components/input/TextAreaField';
 
 const CreateTask = () => {
   const navigate = useNavigate();
@@ -14,83 +17,80 @@ const CreateTask = () => {
   });
   const [error, setError] = useState();
 
+  const getCurrentDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  // not accurate
+  // const todayDate = new Date().toISOString().split('T')[0];
+
+  const todayDate = getCurrentDate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log('tasl', task)
-      const res = await axios.post(`http://localhost:4000/addTask`, task)
-      toast.success(res?.data?.message)
-      // navigate("/");
+      const res = await axios.post(`http://localhost:4000/addTask`, task);
+      toast.success(res?.data?.message);
       setTask({
         title: "",
         description: "",
         date: "",
         timePeriod: "",
         completed: false
-      })
+      });
+    } catch (err) {
+      setError(err?.response?.data?.error);
+      toast.error(err?.response?.data?.error);
     }
-    catch (err) {
-      console.log('err', err)
-      setError(err?.response?.data?.error)
-      toast.error(err?.response?.data?.error)
-    }
-  }
+  };
 
+  const timePeriodOptions = [
+    { value: 'Week', label: 'Week' },
+    { value: 'Month', label: 'Month' },
+  ];
 
   return (
-    <div className="max-w-2xl mx-auto p-8 bg-gray-100 rounded-lg shadow-lg">
-      <h1 className="text-3xl font-bold text-center text-gray-800 mb-4">Welcome to Classy Todo</h1>
-      <h2 className="text-xl font-semibold text-center text-gray-600 mb-6">Create Tasks</h2>
+    <div className="max-w-2xl mx-auto p-8 bg-gray-100 dark:bg-gray-900 dark:text-white rounded-lg shadow-lg">
+      <h1 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-4">Welcome to Classy Todo</h1>
+      <h2 className="text-xl font-semibold text-center text-gray-600 dark:text-gray-300 mb-6">Create Tasks</h2>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="flex flex-col">
-          <label htmlFor="title" className="text-gray-700 font-medium mb-2">Title</label>
-          <input
-            id="title"
-            type="text"
-            placeholder="Enter title"
-            value={task.title}
-            onChange={(e) => setTask((prev) => ({ ...prev, title: e.target.value }))}
-            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
 
-        <div className="flex flex-col">
-          <label htmlFor="description" className="text-gray-700 font-medium mb-2">Description</label>
-          <textarea
-            id="description"
-            placeholder="Enter description"
-            value={task.description}
-            onChange={(e) => setTask((prev) => ({ ...prev, description: e.target.value }))}
-            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"
-          />
-        </div>
+        <InputField
+          label="Title"
+          type="text"
+          placeholder="Enter title"
+          value={task.title}
+          onChange={(e) => setTask({ ...task, title: e.target.value })}
+        />
 
-        <div className="flex flex-col">
-          <label htmlFor="date" className="text-gray-700 font-medium mb-2">Date</label>
-          <input
-            id="date"
-            type="date"
-            value={task.date}
-            onChange={(e) => setTask((prev) => ({ ...prev, date: e.target.value }))}
-            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+        <TextAreaField
+          label="Description"
+          value={task.description}
+          placeholder="Enter task description"
+          onChange={(e) => setTask({ ...task, description: e.target.value })}
+        />
 
-        <div className="flex flex-col">
-          <label htmlFor="timePeriod" className="text-gray-700 font-medium mb-2">Time Period</label>
-          <select
-            id="timePeriod"
-            value={task.timePeriod}
-            onChange={(e) => setTask((prev) => ({ ...prev, timePeriod: e.target.value }))}
-            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="">Select time period</option>
-            <option value="Week">Week</option>
-            <option value="Month">Month</option>
-          </select>
-        </div>
+        <InputField
+          label="Date"
+          type="date"
+          min={todayDate}
+          placeholder="Enter date"
+          value={task.date}
+          onChange={(e) => setTask({ ...task, date: e.target.value })}
+        />
+
+        <SelectField
+          label="Time Period"
+          value={task.timePeriod}
+          onChange={(e) => setTask({ ...task, timePeriod: e.target.value })}
+          options={timePeriodOptions}
+        />
+
 
         <div className="flex items-center space-x-2">
           <input
@@ -100,13 +100,10 @@ const CreateTask = () => {
             onChange={(e) => setTask((prev) => ({ ...prev, completed: e.target.checked }))}
             className="form-checkbox h-5 w-5 text-blue-600"
           />
-          <label htmlFor="completed" className="text-gray-700">Completed</label>
+          <label htmlFor="completed" className="text-gray-700 dark:text-gray-300">Completed</label>
         </div>
 
-        {
-          error &&
-          <p className='text-red-500 mb-6'>{error}</p>
-        }
+        {error && <p className='text-red-500 dark:text-red-400 mb-6'>{error}</p>}
 
         <button
           type="submit"
@@ -115,7 +112,7 @@ const CreateTask = () => {
           Create Task
         </button>
 
-        <button className='w-full py-2 bg-gray-200' onClick={() => navigate("/allTasks")}>See All Tasks</button>
+        <button className='w-full py-2 bg-gray-200 dark:bg-gray-700 dark:text-white' onClick={() => navigate("/allTasks")}>See All Tasks</button>
       </form>
     </div>
   );

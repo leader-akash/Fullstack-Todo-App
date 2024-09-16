@@ -6,8 +6,19 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color-scheme: light dark;
+  --color-light-background: #F9FAFB;
+  --color-light-text: #1F2937;
+  --color-dark-background: #1F2937;
+  --color-dark-text: #F9FAFB;
 }
+
+.dark {
+  --color-light-background: #1F2937;
+  --color-light-text: #F9FAFB;
+  --color-dark-background: #1F2937;
+  --color-dark-text: #F9FAFB;
+}
+
 
 body {
   margin: 0;
