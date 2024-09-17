@@ -7,7 +7,7 @@ const signup = async(req, res) => {
         const {name, username, password, confirmPassword} = req.body;
 
         console.log('data', name, username, password, confirmPassword)
-
+        res.send("Singup")
         if(password.length < 6){
             return res.status(400).json({error: "Password must have atleast 6 characters"});
         }
@@ -58,6 +58,7 @@ const signup = async(req, res) => {
 const login = async(req,res) => {
     try{
         const {username, password} = req.body;
+        res.send("Login")
 
         console.log('username', username, password);
 
