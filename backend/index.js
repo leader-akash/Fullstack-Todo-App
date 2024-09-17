@@ -22,6 +22,15 @@ app.use(cookieParser()); // to parse cookies
 app.use("/api/auth", authRoutes)
 app.use("/", todoRoutes)
 
+app.get('/hello', (req, res) => {
+    res.send('Hello World')
+  })
+
+  app.get('/about', (req, res) => {
+    res.send('About route 🎉 ')
+  })
+  
+
 app.listen(port, () => {
     connectToMongoDb();
     console.log(`server started at, ${port}`)

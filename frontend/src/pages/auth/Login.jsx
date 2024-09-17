@@ -16,7 +16,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const res = await axios.post(`https://classsy-todo-backend.vercel.app/api/auth/login`, data);
+            const res = await axios.post(`https://classy-todo-backend.vercel.app/api/auth/login`, data);
             localStorage.setItem('jwtToken', res.data.token);
             console.log('res', res)
             toast.success(res?.data?.message);
