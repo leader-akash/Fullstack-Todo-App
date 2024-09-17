@@ -25,7 +25,7 @@ const Signup = () => {
     }
 
     try {
-      const res = await axios.post(`http://localhost:4000/api/auth/signup`, data);
+      const res = await axios.post(`https://classsy-todo-backend.vercel.app/`, data);
       localStorage.setItem('jwtToken', res.data.token);
 
       toast.success(res?.data?.message);
