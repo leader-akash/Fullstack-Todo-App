@@ -3,3 +3,8 @@
   padding: 0;
   text-align: center;
 }
+
+.css-rsks93-MuiPaper-root-MuiDialog-paper{
+  min-width: 300px;
+  width: 500px;
+}

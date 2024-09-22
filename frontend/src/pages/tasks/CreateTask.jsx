@@ -42,10 +42,8 @@ const CreateTask = () => {
       const res = await axios.post('http://localhost:4000/addTask', task, {
         headers: {
             'Authorization': `Bearer ${token}`
-        },
-        withCredentials: true // This ensures cookies are sent with the request
+        }
     });
-    console.log('res', res)
     
       toast.success(res?.data?.message);
       setTask({
@@ -67,9 +65,9 @@ const CreateTask = () => {
   ];
 
   return (
-    <div className="max-w-2xl mx-auto p-8 bg-gray-100 dark:bg-gray-900 dark:text-white rounded-lg shadow-lg">
-      <h1 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-4">Welcome to Classy Todo</h1>
-      <h2 className="text-xl font-semibold text-center text-gray-600 dark:text-gray-300 mb-6">Create Tasks</h2>
+    <div className="max-w-2xl mx-auto mt-5  p-8 bg-gray-100 dark:bg-gray-900 dark:text-white rounded-lg shadow-lg">
+      {/* <h1 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-4">Welcome to Classy Todo</h1> */}
+      <h2 className="text-2xl font-semibold text-center text-gray-600 dark:text-gray-300 mb-6">Create Tasks</h2>
 
       <form onSubmit={handleSubmit} className="space-y-6">
 
@@ -105,7 +103,7 @@ const CreateTask = () => {
         />
 
 
-        <div className="flex items-center space-x-2">
+        {/* <div className="flex items-center space-x-2">
           <input
             id="completed"
             type="checkbox"
@@ -114,7 +112,7 @@ const CreateTask = () => {
             className="form-checkbox h-5 w-5 text-blue-600"
           />
           <label htmlFor="completed" className="text-gray-700 dark:text-gray-300">Completed</label>
-        </div>
+        </div> */}
 
         {error && <p className='text-red-500 dark:text-red-400 mb-6'>{error}</p>}
 

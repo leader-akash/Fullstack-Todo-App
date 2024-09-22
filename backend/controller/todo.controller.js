@@ -27,7 +27,7 @@ const addTask = async (req, res) => {
             date: newTask.date,
             timePeriod: newTask.timePeriod,
             completed: newTask.completed,
-            userId: newTask.user, // Set user reference
+            userId: newTask.user,
             message: "Task created successfully 🎉"
         });
     } catch (err) {
@@ -83,7 +83,7 @@ const updateTask = async (req, res) => {
             return res.status(404).json({ error: "Task not found" });
         }
 
-        res.status(200).json(updatedTask);
+        res.status(200).json({...updatedTask, message: "Task updated successfully"});
     } catch (err) {
         console.error('Error in updateTask:', err);
         res.status(500).json({ error: "Internal server error" });

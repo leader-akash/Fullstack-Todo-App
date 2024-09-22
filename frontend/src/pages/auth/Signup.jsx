@@ -23,9 +23,8 @@ const Signup = () => {
       setError('Passwords do not match');
       return;
     }
-
     try {
-      const res = await axios.post(`https://classsy-todo-backend.vercel.app/`, data);
+      const res = await axios.post(`http://localhost:4000/api/auth/signup`, data);
       localStorage.setItem('jwtToken', res.data.token);
 
       toast.success(res?.data?.message);
@@ -38,8 +37,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen dark:bg-gray-900 dark:text-white">
-      <div className=" dark:bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
+    <div className="flex justify-center py-5 min-h-screen bg-gray-100 dark:bg-gray-800 dark:text-white">
+      <div className=" dark:bg-gray-900 p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6">Signup</h2>
         <form onSubmit={handleSubmit}>
           <InputField

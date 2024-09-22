@@ -16,7 +16,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const res = await axios.post(`https://classy-todo-backend.vercel.app/api/auth/login`, data);
+            const res = await axios.post(`http://localhost:4000/api/auth/login`, data);
             localStorage.setItem('jwtToken', res.data.token);
             console.log('res', res)
             toast.success(res?.data?.message);
@@ -29,8 +29,8 @@ const Login = () => {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen dark:bg-gray-900 dark:text-white">
-            <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
+        <div className="flex justify-center py-5 dark:bg-gray-800 dark:text-white">
+            <div className="bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg w-full max-w-md">
                 <h2 className="text-2xl font-bold mb-6">Login</h2>
                 <form onSubmit={handleSubmit}>
                     <InputField
